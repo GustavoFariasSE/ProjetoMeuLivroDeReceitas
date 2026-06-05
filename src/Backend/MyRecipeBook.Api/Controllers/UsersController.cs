@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Communication.Requests;
 
 namespace MyRecipeBook.Api.Controllers;
@@ -12,11 +13,22 @@ public class UsersController : ControllerBase
     public IActionResult Register([FromBody] RequestRegisterUserAccountJson request,
         [FromServices] IValidator<RequestRegisterUserAccountJson> validator)
     {
-        var result = validator.Validate(request);
-        if (!result.IsValid)
+        try
         {
-            return BadRequest(result.Errors);
+            var result = validator.Validate(request);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+            var useCase = new RegisterUserAccountUseCase();
+
+            useCase.Execute(request);
+
+            return Created();
         }
-        return Created();
+        catch ()
+        {
+
+        }
     }
 }
