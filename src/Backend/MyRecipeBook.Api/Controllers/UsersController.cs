@@ -13,22 +13,10 @@ public class UsersController : ControllerBase
     public IActionResult Register([FromBody] RequestRegisterUserAccountJson request,
         [FromServices] IValidator<RequestRegisterUserAccountJson> validator)
     {
-        try
-        {
-            var result = validator.Validate(request);
-            if (!result.IsValid)
-            {
-                return BadRequest(result.Errors);
-            }
-            var useCase = new RegisterUserAccountUseCase();
+        var useCase = new RegisterUserAccountUseCase();
 
-            useCase.Execute(request);
+        useCase.Execute(request);
 
-            return Created();
-        }
-        catch ()
-        {
-
-        }
+        return Created();
     }
 }
