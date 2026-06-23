@@ -16,8 +16,35 @@ internal sealed class Argon2PasswordHasher : IPasswordHasher
     {
         var salt = RandomNumberGenerator.GetBytes(SALT_SIZE);
 
-        var passwordBytes = Encoding.UTF8.GetBytes(password);
+        var hash = HashPasswordGrinder(password, salt);
 
+        var combinedBytes = new byte[hash.Length + salt.Length];
+
+        salt.CopyTo(combinedBytes.AsSpan(0, hash.Length));
+        hash.CopyTo(combinedBytes, index: salt.Length);
+
+        return Convert.ToBase64String(combinedBytes);
+    }
+
+    public bool VerifyPassword(string password, string passwordHash)
+    {
+        var combinedBytes = Convert.FromBase64String(passwordHash);
+
+        var salt = new byte[SALT_SIZE];
+        var hash = new byte[HASH_SIZE];
+
+        Array.Copy(combinedBytes, salt, SALT_SIZE);
+        Array.Copy(combinedBytes, SALT_SIZE, hash, 0, HASH_SIZE);
+
+        var newHash = HashPasswordGrinder(password, salt);
+
+        return CryptographicOperations.FixedTimeEquals(hash, newHash);
+    }
+
+
+    private byte[] HashPasswordGrinder(string password, byte[] salt)
+    {
+        var passwordBytes = Encoding.UTF8.GetBytes(password);
 
         var hashAlgorithm = new Argon2id(passwordBytes)
         {
@@ -27,18 +54,6 @@ internal sealed class Argon2PasswordHasher : IPasswordHasher
             Salt = salt
         };
 
-        var hash = hashAlgorithm.GetBytes(HASH_SIZE);
-
-        var conbinedBytes = new byte[hash.Length + salt.Length];
-
-        salt.CopyTo(conbinedBytes.AsSpan(0, hash.Length));
-        hash.CopyTo(conbinedBytes, index: salt.Length);
-
-        return Convert.ToBase64String(conbinedBytes);
-    }
-
-    public bool VerifyPassword(string password, string passwordHash)
-    {
-        throw new NotImplementedException();
+        return hashAlgorithm.GetBytes(HASH_SIZE);
     }
 }
