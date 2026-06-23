@@ -1,7 +1,9 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using MyRecipeBook.Application;
 using MyRecipeBook.Application.UseCases.User.Register;
+using MyRecipeBook.Infrastructure;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +14,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplication();
+builder.Services.AddInfrastrucuture();
 
-MyRecipeBook.Infrastructure.DependencyInjectionExtension.AddInfrastrucuture(builder.Services);
-MyRecipeBook.Application.DependencyInjectionExtension.AddApplication(builder.Services);
+
 
 
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserAccountValidator>();

@@ -3,9 +3,9 @@ using MyRecipeBook.Domain.Security.PasswordHashing;
 using MyRecipeBook.Infrastructure.Security.PasswordHashing;
 
 namespace MyRecipeBook.Infrastructure;
-public class DependencyInjectionExtension
+public static class DependencyInjectionExtension
 {
-    public static void AddInfrastrucuture(IServiceCollection services)
+    public static void AddInfrastrucuture(this IServiceCollection services)
     {
         services.AddScoped<IPasswordHasher, Argon2PasswordHasher>();
     }
