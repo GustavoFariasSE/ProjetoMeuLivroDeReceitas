@@ -18,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastrucuture();
+builder.Services.AddInfrastrucuture(builder.Configuration);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
