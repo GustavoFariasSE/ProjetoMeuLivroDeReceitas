@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MyRecipeBook.Communication.Requests;
+using MyRecipeBook.Communication.Response;
 using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Domain.Security.PasswordHashing;
@@ -19,7 +20,7 @@ public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
         _uniteOfWork = unityOfWork;
     }
 
-    public async Task Execute(RequestRegisterUserAccountJson request)
+    public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserAccountJson request)
     {
         ValidateAndThrowOnFailures(request);
 
@@ -30,6 +31,12 @@ public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
         await _userWriteOnlyRepository.Add(user);
 
         await _uniteOfWork.Commit();
+
+        return new ResponseRegisteredUserJson
+        {
+            Name = user.Name,
+            
+        };
     }
 
     private void ValidateAndThrowOnFailures(RequestRegisterUserAccountJson request)
