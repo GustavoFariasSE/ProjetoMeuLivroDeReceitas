@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecipeBook.Communication"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecipeBook.Exception", "src\Shared\MyRecipeBook.Exception\MyRecipeBook.Exception.csproj", "{4C85DA9C-8310-4A9E-BF7A-54855E6FA188}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\Validators.Tests\Validators.Tests.csproj", "{CC22BC65-6B00-44F5-BB41-3007685349A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTestUtilities", "tests\CommonTestUtilities\CommonTestUtilities.csproj", "{DE606312-070F-449F-A78B-B1E660FB2BCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,22 @@ Global
 		{4C85DA9C-8310-4A9E-BF7A-54855E6FA188}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C85DA9C-8310-4A9E-BF7A-54855E6FA188}.Release|x64.ActiveCfg = Release|x64
 		{4C85DA9C-8310-4A9E-BF7A-54855E6FA188}.Release|x64.Build.0 = Release|x64
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Debug|x64.Build.0 = Debug|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Release|x64.ActiveCfg = Release|Any CPU
+		{CC22BC65-6B00-44F5-BB41-3007685349A3}.Release|x64.Build.0 = Release|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Debug|x64.Build.0 = Debug|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Release|x64.ActiveCfg = Release|Any CPU
+		{DE606312-070F-449F-A78B-B1E660FB2BCC}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +112,8 @@ Global
 		{AF44E116-9F72-425A-A6B2-66BEB3E969C4} = {5ABC36EB-2F24-4ACB-95D7-48B3EFB27841}
 		{3952F368-5BE8-4E76-A2E3-6ABFFD6012AE} = {845E0E80-79F6-4662-A586-AC4404C69D23}
 		{4C85DA9C-8310-4A9E-BF7A-54855E6FA188} = {845E0E80-79F6-4662-A586-AC4404C69D23}
+		{CC22BC65-6B00-44F5-BB41-3007685349A3} = {23336889-B466-426F-A7F2-40D5250A4B72}
+		{DE606312-070F-449F-A78B-B1E660FB2BCC} = {23336889-B466-426F-A7F2-40D5250A4B72}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E574B57-95C1-440C-AD9B-D01393101A47}
