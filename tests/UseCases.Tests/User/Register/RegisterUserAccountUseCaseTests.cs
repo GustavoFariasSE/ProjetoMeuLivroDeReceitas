@@ -2,7 +2,11 @@
 using CommonTestUtilities.Requests;
 using CommonTestUtilities.Security;
 using MyRecipeBook.Application.UseCases.User.Register;
+using MyRecipeBook.Domain.Extensions;
+using MyRecipeBook.Exception;
+using MyRecipeBook.Exception.ExceptionsBase;
 using Shouldly;
+using Xunit.Sdk;
 
 namespace UseCases.Tests.User.Register;
 public class RegisterUserAccountUseCaseTests
@@ -23,14 +27,47 @@ public class RegisterUserAccountUseCaseTests
         result.TokensJson.RefreshToken.ShouldBeNullOrEmpty();
     }
 
-    private RegisterUserAccountUseCase CreateUseCase()
+    [Fact]
+    public async Task Validate_ShouldThrowException_WhenNameIsEmpty()
+    {
+        var request = RequestRegisterUserAccountJsonBuilder.Build();
+        request.Name = string.Empty;
+
+        var useCase = CreateUseCase();
+
+        var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
+        exception.GetErrorMessage().ShouldSatisfyAllConditions(errorMessages =>
+        {
+            errorMessages.Count.ShouldBe(1);
+            errorMessages.ShouldContain(ResourceMessagesException.VALIDATION_NAME_REQUIRED);
+        });
+    }
+
+    [Fact]
+    public async Task Validate_ShouldThrowException_WhenEmailAlreadyExists()
+    {
+        var request = RequestRegisterUserAccountJsonBuilder.Build();
+
+        var useCase = CreateUseCase(request.Email);
+
+        var exception = await useCase.Execute(request).ShouldThrowAsync<ErrorOnValidationException>();
+        exception.GetErrorMessage().ShouldSatisfyAllConditions(errorMessages =>
+        {
+            errorMessages.Count.ShouldBe(1);
+            errorMessages.ShouldContain(ResourceMessagesException.VALIDATION_EMAIL_ALREADY_EXISTS);
+        });
+    }
+
+    private RegisterUserAccountUseCase CreateUseCase(string? emailThatAlreadyExists = null)
     {
         var unitOfWork = IUnityOfWorkBuilder.Build();
         var userWriteOnlyRepository = IUserWriteOnlyRepositoryBuilder.Build();
-        var userReadOnlyRepository = new IUserReadOnlyRepositoryBuilder().Build();
         var passwordHasher = new IPasswordHasherBuilder().Build();
+        var userReadOnlyRepositoryBuilder = new IUserReadOnlyRepositoryBuilder();
+        if (emailThatAlreadyExists.IsNotEmpty())
+            userReadOnlyRepositoryBuilder.ExistActiveUserWithEmail(emailThatAlreadyExists);
 
         return new RegisterUserAccountUseCase(passwordHasher, userWriteOnlyRepository, 
-            unitOfWork, userReadOnlyRepository);
+            unitOfWork, userReadOnlyRepositoryBuilder.Build());
     }
 }
